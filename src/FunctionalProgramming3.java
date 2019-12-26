@@ -1,8 +1,6 @@
 import java.util.List;
-import java.util.function.BinaryOperator;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Predicate;
+import java.util.Random;
+import java.util.function.*;
 
 public class FunctionalProgramming3 {
 
@@ -50,6 +48,8 @@ public class FunctionalProgramming3 {
                 .forEach(sysOutPrintlnBackground);
         System.out.println("------");
 
+        //For operator accept 2 parameter and return 1 output.
+        // And all parameters and output are the same type(Integer for below)
         BinaryOperator<Integer> sumBinaryOperator = Integer::sum;
         BinaryOperator<Integer> sumBinaryOperator2 = new BinaryOperator<Integer>() {
 
@@ -61,5 +61,55 @@ public class FunctionalProgramming3 {
         int sum = numbers.stream()
                 .reduce(0, sumBinaryOperator2);
         System.out.println(sum);
+
+        System.out.println("------");
+        //No input > Return sth. (Like a factory pattern)
+        Supplier<Integer> randomIntegerSupplier = () -> {
+            Random random = new Random();
+            return random.nextInt(1000);
+        };
+
+        System.out.println(randomIntegerSupplier.get());
+
+        System.out.println("------");
+        UnaryOperator<Integer> unaryOperator = (x) -> 3*x;
+        System.out.println(unaryOperator.apply(10));
+
+        System.out.println("------");
+        BiPredicate<Integer, String> biPredicate = (number,str)-> {
+            return number <10 && str.length()>5;
+        };
+        System.out.println(biPredicate.test(5, "tanerus"));
+
+        System.out.println("------");
+        BiFunction<Integer, String, String> biFunction = (number,str)-> {
+            return number +" " + str;
+        };
+        System.out.println(biFunction.apply(5, "tanerus"));
+
+        System.out.println("------");
+        BiConsumer<Integer, String> biConsumer = (s1, s2) -> {
+            System.out.println(s1);
+            System.out.println(s2);
+        };
+        biConsumer.accept(16,"tanerus!!");
+
+        //For below function, you cannot use generic type, you can use only int type
+        //To avoid the wrapper class increase your code's performance
+        //because of boxing and unboxing
+        //primitive type
+
+        //IntBinaryOperator
+        //IntConsumer
+        //IntFunction
+        //IntPredicate
+        //IntSupplier
+        //IntToDoubleFunction
+        //IntToLongFunction
+        //IntUnaryOperator
+
+        IntBinaryOperator intBinaryOperator = (x,y) -> x+y;
+        System.out.println();
+
     }
 }
