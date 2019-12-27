@@ -1,6 +1,6 @@
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.OptionalDouble;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -190,7 +190,39 @@ public class FunctionalProgramming4CustomClass {
                         Collectors.mapping(Course::getName, Collectors.toList()))));
         //{Cloud=[AWS, Azure, Docker, Kubernates], FullStack=[FullStack], Microservices=[API, Microservices], Framework=[Spring, Spring Boot]}
 
+        //All intermadiate operation is lazy, only terminal operaion called the intermadiates are called
+        System.out.println("-----");
+        List<String> courses2 = List.of("Spring", "Spring Boot", "API", "Microservices",
+                "AWS", "PCF", "Azure", "Docker", "Kubernetes");
+        courses2.stream()
+                .peek(System.out::println)
+                .filter(course -> course.length()>11)
+                .map(String::toUpperCase)
+                .peek(System.out::println)
+                .findFirst();
+        //Spring
+        //Spring Boot
+        //API
+        //Microservices
+        //MICROSERVICES
 
+        System.out.println("-----");
+        courses2.stream()
+                .peek(System.out::println)
+                .filter(course -> course.length()>11)
+                .map(String::toUpperCase)
+                .peek(System.out::println);
+        //Nothing write to console. Because terminate function doesnt call
+        //Lazy
+
+        System.out.println("-----");
+        List<String> modifyableCourses = new ArrayList<>(courses2);
+        modifyableCourses.replaceAll(str -> str.toUpperCase());
+        System.out.println(modifyableCourses);
+
+        System.out.println("-----");
+        modifyableCourses.removeIf(course -> course.length()<6);
+        System.out.println(modifyableCourses);
 
     }
 }
